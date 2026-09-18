@@ -21,7 +21,7 @@ Make list of monser objects
 Parent Loop
         --Offer shop every 3 or 5 encounters, player can buy RAM to win or buy health or upgrades.
         Child Loop Loop:
-            Randomize amount and type of monsters to fight
+            Randomize monsters to fight +
             player can choose to fight, chance to win and gain money, chance to lose and get damage
             player can choose to run, small chance to instantly die
 
@@ -30,8 +30,16 @@ Parent Loop
     Player die
     Player saves enough money to buy more RAM
 
-    Store values in monster:  POW, Worth
+    Store values in monster:  POW, Worth +
 
+
+
+
+
+
+LORE
+    For your insolent programming, Professor Marriott has BANISHED you to the realm of the Academics 1 desktops! Now you must fix
+    your memory leaks and syntax errors through combat; to clear enough bits in your system to earn yourself the RAM to escape!
 */
 
 //********************************************
@@ -39,8 +47,8 @@ int genRandNum(int x, int y)
 {
 	//Generate random number between x and Y
 
-	int randNum = x +(rand() % (y+1)-x);
-	cout<<"x="<<x<<" Y="<<y<<endl;
+	int randNum = x+1 +(rand() % (y)-x);
+	cout<<"     min="<<x<<" max="<<y<<endl;
 	return randNum;
 }
 
@@ -48,12 +56,12 @@ int genRandNum(int x, int y)
 
 void shop()
 {
-    //Manage shop
+	//Manage shop
 	cout<<"Welcome to my Shop!\n \nScripts, Memory, RAM, you want it? Its yours my friend! \nAs long as you have enough bits!"
 	    " What can I get for you?\n\n(1.Memory +10 (25 bits)\n(2.RAM (200 bits)\n\n(3. Leave :(\n";
 	int userSelect =0;
 	cin>>userSelect;
-	
+
 	if (userSelect ==1)
 	{
 		cout<<"\nGood choice, You healed 10 memory\n";
@@ -61,34 +69,41 @@ void shop()
 	}
 	if (userSelect ==2)
 	{
-	    cout<<"Wow you can actually afford it?! Obtained RAM, You win!\n";
-	    //hasRAM = true
+		cout<<"Wow you can actually afford it?! Obtained RAM, You win!\n";
+		//hasRAM = true
 	}
 	if(userSelect ==3)
 	{
-	    cout<<"Goodbye\n";
+		cout<<"Goodbye\n";
 	}
 	else
 	{
-	    cout<<"Sorry I don't speak Italian\n";
+		cout<<"Sorry I don't speak Italian\n";
 	}
 }
 
 
-int createEncounter(int maxEnemies)
+int fight(int playerHealth,int playerMoney, int bugPOW, int bugWorth)
 {
-    //Generate array of enemies
-    int genEnemies = 0; //current amount of generated enemies
-    int maxEnemies; //max amount of enemies
-    int spawnedEnemies; //enemies spawned in
-    for (genEnemies =0; genEnemies >= maxEnemies,)
-    {
-        
-    }
-    
-    
-    
+	//fight enemies, win and get their worth or lose and take damage
+	int chance= genRandNum(1,2);
+	if(chance ==1)
+	{
+		//Win
+		cout<<"\nYOU WIN\n";
+		playerMoney = playerMoney + bugWorth;
+		cout<<"Your money is now "<<playerMoney<<endl;
+	}
+	else if (chance ==2)
+	{
+		//lose
+		cout<<"\nYOU LOSE\n";
+		playerHealth = playerHealth - bugPOW;
+		cout<<"Your health is now "<<playerHealth<<endl;
+	}
+	return 0;
 }
+
 //*************************************************
 class Hero
 {
@@ -109,13 +124,27 @@ public:
 
 int main()
 {
-    srand(time(0));
+	srand(time(0));
 	//store hero presets
 	Hero easy;
 	easy.health = 30;
 	easy.money = 20;
+	int playerHealth = easy.health;
+	int playerMoney = easy.money;
+	bool hasRAM = false; //win when RAM = true
+
+
 
 	//store monster presets
+
+	monster codebug;
+	codebug.POW = genRandNum(5,10);
+	cout<<"Bug Pow = "<<codebug.POW<<endl;
+	codebug.worth = genRandNum(1,10);
+	cout<<"Bug Worth = "<<codebug.worth<<endl;
+	int bugPOW = codebug.POW;
+	int bugWorth = codebug.worth;
+	/*
 	monster bug;
 	bug.POW = 2;
 	bug.worth = 10;
@@ -139,17 +168,16 @@ int main()
 	monster professor;
 	professor.POW = 9999;
 	professor.worth = 100;
-	professor.name = "Professor Marriot";
+	professor.name = "Professor Marriott";
+
+	*/
 
 
 
-	int playerHealth = easy.health;
-	int playerMoney = easy.money;
-	bool hasRAM = false; //win when RAM = true
+	monster array[]= {};
 
-	monster array[]={};
 
-	
+	/*
 	int randNum1;   //Testing for rand num gen
 	randNum1 = genRandNum(100,1000);
 	cout<<randNum1<<endl;
@@ -157,22 +185,22 @@ int main()
 	int randNum2;
 	randNum2 = genRandNum(20,40);
 	cout<<randNum2<<endl;
-	
+
+	*/
 
 
 
 
-	
 	cout<<"playerhp="<<playerHealth<<" playerMoney="<<playerMoney<<endl;
 
 	//shop(); //test for shop
 	/*
 	while(hasRAM == false || playerHealth >=0)
 	{
-	    
+
 	}
 	*/
-	
+	fight( playerHealth, playerMoney,  bugPOW,  bugWorth);
 
 	return 0;
 }
