@@ -1,0 +1,57 @@
+/******************************************************************************
+Dean Bingham
+CPSC 225
+9/11/2026
+The Legend of CPSC225: Tears of the programmer
+
+
+*******************************************************************************/
+#include <iostream>
+#include <string>
+#include <ctime>
+#include <cstdlib>
+using namespace std;
+
+
+/* TO DO LIST
+Store Hero object
+Make list of monser objects
+
+Parent Loop
+        --Offer shop every 3 or 5 encounters, player can buy RAM to win or buy health or upgrades.
+        Child Loop Loop:
+            Randomize amount and type of monsters to fight
+            player can choose to fight, chance to win and gain money, chance to lose and get damage
+            player can choose to run, small chance to instantly die
+            
+    
+    End loop when:
+    Player die
+    Player saves enough money to buy more RAM
+    
+    Store values in monster:  POW, Worth
+
+*/
+
+
+
+  class Hero
+    {
+        public:
+        int health;
+        int money;
+    };
+    class monster
+    {
+        public:
+        int POW;
+        int worth;
+    };
+    
+int main()
+{
+  
+  
+    
+	return 0;
+}
