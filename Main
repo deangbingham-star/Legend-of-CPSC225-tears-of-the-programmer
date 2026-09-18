@@ -10,6 +10,7 @@ The Legend of CPSC225: Tears of the programmer
 #include <string>
 #include <ctime>
 #include <cstdlib>
+#include <ctime>
 using namespace std;
 
 
@@ -23,35 +24,130 @@ Parent Loop
             Randomize amount and type of monsters to fight
             player can choose to fight, chance to win and gain money, chance to lose and get damage
             player can choose to run, small chance to instantly die
-            
-    
+
+
     End loop when:
     Player die
     Player saves enough money to buy more RAM
-    
+
     Store values in monster:  POW, Worth
 
 */
 
+//********************************************
+int genRandNum(int x, int y)
+{
+	//Generate random number between x and Y
+	srand(time(0));
+	int randNum = rand() % y;
+	cout<<"x="<<x<<" Y="<<y<<endl;
+	return randNum;
+}
+
+//**********************************************
+
+void shop()
+{
+	cout<<"Welcome to my Shop!\n \nScripts, Memory, RAM, you want it? Its yours my friend! \nAs long as you have enough bits!"
+	    " What can I get for you?\n\n(1.Memory +10 (25 bits)\n(2.RAM (200 bits)\n\n(3. Leave :(\n";
+	int userSelect =0;
+	cin>>userSelect;
+	if (userSelect ==1)
+	{
+		cout<<"\nGood choice, You healed 10 memory\n";
+
+	}
+	if (userSelect ==2)
+	{
+	    cout<<"Wow you can actually afford it?! Obtained RAM, You win!\n";
+	    //hasRAM = true
+	}
+	if(userSelect ==3)
+	{
+	    cout<<"Goodbye\n";
+	}
+	else
+	{
+	    cout<<"Sorry I don't speak Italian\n";
+	}
+
+}
+//*************************************************
+class Hero
+{
+public:
+	int health; //Health is represented by memory
+	int money;
+};
+class monster
+{
+public:
+	string name;
+	int POW;
+	int worth;
+};
+
+//**************************************************
 
 
-  class Hero
-    {
-        public:
-        int health;
-        int money;
-    };
-    class monster
-    {
-        public:
-        int POW;
-        int worth;
-    };
-    
 int main()
 {
-  
-  
-    
+	//store hero presets
+	Hero easy;
+	easy.health = 30;
+	easy.money = 20;
+
+	//store monster presets
+	monster bug;
+	bug.POW = 2;
+	bug.worth = 10;
+	bug.name = "Code Bug";
+
+	monster typo;
+	typo.POW = 5;
+	typo.worth = 15;
+	typo.name = "Typo";
+
+	monster syntax;
+	syntax.POW = 7;
+	syntax.worth = 20;
+	syntax.name = "Syntax Error";
+
+	monster leak;
+	leak.POW = 15;
+	leak.worth = 30;
+	leak.name = "Memory Leak";
+
+	monster professor;
+	professor.POW = 9999;
+	professor.worth = 100;
+	professor.name = "Professor Marriot";
+
+
+
+	int playerHealth = easy.health;
+	int playerMoney = easy.money;
+	bool hasRAM = false; //win when RAM = true
+
+	//class array []={}
+
+	/*
+	int randNum1;   //Testing for rand num gen
+	randNum1 = genRandNum(1,10);
+	cout<<randNum1<<endl;
+
+	int randNum2;
+	randNum1 = genRandNum(1,10);
+	cout<<randNum2<<endl;
+	*/
+
+
+
+
+	
+	cout<<"player hp="<<playerHealth<<" playerMoney="<<playerMoney<<endl;
+
+	shop(); //test for shop
+
 	return 0;
 }
