@@ -38,8 +38,8 @@ Parent Loop
 int genRandNum(int x, int y)
 {
 	//Generate random number between x and Y
-	srand(time(0));
-	int randNum = rand() % y;
+
+	int randNum = x +(rand() % (y+1)-x);
 	cout<<"x="<<x<<" Y="<<y<<endl;
 	return randNum;
 }
@@ -48,10 +48,12 @@ int genRandNum(int x, int y)
 
 void shop()
 {
+    //Manage shop
 	cout<<"Welcome to my Shop!\n \nScripts, Memory, RAM, you want it? Its yours my friend! \nAs long as you have enough bits!"
 	    " What can I get for you?\n\n(1.Memory +10 (25 bits)\n(2.RAM (200 bits)\n\n(3. Leave :(\n";
 	int userSelect =0;
 	cin>>userSelect;
+	
 	if (userSelect ==1)
 	{
 		cout<<"\nGood choice, You healed 10 memory\n";
@@ -70,7 +72,22 @@ void shop()
 	{
 	    cout<<"Sorry I don't speak Italian\n";
 	}
+}
 
+
+int createEncounter(int maxEnemies)
+{
+    //Generate array of enemies
+    int genEnemies = 0; //current amount of generated enemies
+    int maxEnemies; //max amount of enemies
+    int spawnedEnemies; //enemies spawned in
+    for (genEnemies =0; genEnemies >= maxEnemies,)
+    {
+        
+    }
+    
+    
+    
 }
 //*************************************************
 class Hero
@@ -92,6 +109,7 @@ public:
 
 int main()
 {
+    srand(time(0));
 	//store hero presets
 	Hero easy;
 	easy.health = 30;
@@ -129,25 +147,32 @@ int main()
 	int playerMoney = easy.money;
 	bool hasRAM = false; //win when RAM = true
 
-	//class array []={}
+	monster array[]={};
 
-	/*
+	
 	int randNum1;   //Testing for rand num gen
-	randNum1 = genRandNum(1,10);
+	randNum1 = genRandNum(100,1000);
 	cout<<randNum1<<endl;
 
 	int randNum2;
-	randNum1 = genRandNum(1,10);
+	randNum2 = genRandNum(20,40);
 	cout<<randNum2<<endl;
-	*/
+	
 
 
 
 
 	
-	cout<<"player hp="<<playerHealth<<" playerMoney="<<playerMoney<<endl;
+	cout<<"playerhp="<<playerHealth<<" playerMoney="<<playerMoney<<endl;
 
-	shop(); //test for shop
+	//shop(); //test for shop
+	/*
+	while(hasRAM == false || playerHealth >=0)
+	{
+	    
+	}
+	*/
+	
 
 	return 0;
 }
