@@ -43,43 +43,80 @@ LORE
 */
 
 //********************************************
+class Hero
+{
+public:
+	int health; //Health is represented by memory
+	int money;
+	bool hasRAM = false; //win when RAM = true
+};
+class monster
+{
+public:
+	string name;
+	int POW;
+	int worth;
+};
+
+//**************************************************
+
+
 int genRandNum(int x, int y)
 {
 	//Generate random number between x and Y
 
 	int randNum = x+1 +(rand() % (y)-x);
-	cout<<"     min="<<x<<" max="<<y<<endl;
+	//cout<<"     min="<<x<<" max="<<y<<endl;
 	return randNum;
 }
 
 //**********************************************
 
-void shop()
+Hero shop(Hero easy)
 {
 	//Manage shop
 	cout<<"Welcome to my Shop!\n \nScripts, Memory, RAM, you want it? Its yours my friend! \nAs long as you have enough bits!"
 	    " What can I get for you?\n\n(1.Memory +10 (25 bits)\n(2.RAM (200 bits)\n\n(3. Leave :(\n";
-	int userSelect =0;
+	int userSelect;
 	cin>>userSelect;
 
 	if (userSelect ==1)
 	{
-		cout<<"\nGood choice, You healed 10 memory\n";
+		if (easy.money >=25)
+		{
+			cout<<"\nGood choice, You healed 10 memory\n";
+			easy.health = easy.health +10;
+			easy.money = easy.money - 25;
+		}
+		else if(easy.money<25)
+		{
+			cout<<"\nSorry hero,I dont give credit! Come back when youre a little, HMMM, Richer!\n"<<endl;
+		}
+	}
+	else if (userSelect ==2)
+	{
+		if (easy.money >=200)
+		{
+			cout<<"Wow you can actually afford it?! Obtained RAM!\n";
+			easy.hasRAM = true;
+			easy.money = easy.money - 200;
+		}
+		else if(easy.money<25)
+		{
+			cout<<"\nSorry hero,I dont give credit! Come back when youre a little, HMMM, Richer!\n"<<endl;
+		}
+		else if(userSelect ==3)
+		{
+			cout<<"Goodbye\n";
+		}
+		else
+		{
+			cout<<"Sorry I don't speak Italian\n";
+		}
 
 	}
-	if (userSelect ==2)
-	{
-		cout<<"Wow you can actually afford it?! Obtained RAM, You win!\n";
-		//hasRAM = true
-	}
-	if(userSelect ==3)
-	{
-		cout<<"Goodbye\n";
-	}
-	else
-	{
-		cout<<"Sorry I don't speak Italian\n";
-	}
+
+	return  easy;
 }
 
 
@@ -104,23 +141,28 @@ int fight(int playerHealth,int playerMoney, int bugPOW, int bugWorth)
 	return 0;
 }
 
+int run(int playerHealth)
+{
+	//Run, very small chance to die, no money gained
+	int runChance = genRandNum(1,20);
+	cout<<"Your chance: "<<runChance;
+	if (runChance==20)
+	{
+		//die
+		cout<<"\nYOU DIED!"<<endl;
+		playerHealth = 0;
+
+	}
+	return playerHealth;
+}
+
+void displayBug(monster codebug)
+{
+ 	cout<<"Bug Pow = "<<codebug.POW<<endl;
+ 	cout<<"Bug Worth = "<<codebug.worth<<endl;   
+}
+
 //*************************************************
-class Hero
-{
-public:
-	int health; //Health is represented by memory
-	int money;
-};
-class monster
-{
-public:
-	string name;
-	int POW;
-	int worth;
-};
-
-//**************************************************
-
 
 int main()
 {
@@ -131,7 +173,8 @@ int main()
 	easy.money = 20;
 	int playerHealth = easy.health;
 	int playerMoney = easy.money;
-	bool hasRAM = false; //win when RAM = true
+	bool hasRAM = easy.hasRAM;
+
 
 
 
@@ -139,42 +182,15 @@ int main()
 
 	monster codebug;
 	codebug.POW = genRandNum(5,10);
-	cout<<"Bug Pow = "<<codebug.POW<<endl;
+
 	codebug.worth = genRandNum(1,10);
-	cout<<"Bug Worth = "<<codebug.worth<<endl;
+
 	int bugPOW = codebug.POW;
 	int bugWorth = codebug.worth;
-	/*
-	monster bug;
-	bug.POW = 2;
-	bug.worth = 10;
-	bug.name = "Code Bug";
-
-	monster typo;
-	typo.POW = 5;
-	typo.worth = 15;
-	typo.name = "Typo";
-
-	monster syntax;
-	syntax.POW = 7;
-	syntax.worth = 20;
-	syntax.name = "Syntax Error";
-
-	monster leak;
-	leak.POW = 15;
-	leak.worth = 30;
-	leak.name = "Memory Leak";
-
-	monster professor;
-	professor.POW = 9999;
-	professor.worth = 100;
-	professor.name = "Professor Marriott";
-
-	*/
 
 
 
-	monster array[]= {};
+
 
 
 	/*
@@ -193,14 +209,29 @@ int main()
 
 	cout<<"playerhp="<<playerHealth<<" playerMoney="<<playerMoney<<endl;
 
-	//shop(); //test for shop
-	/*
+	//run(easy.health);
+	//shop(easy); //test for shop
+
+
 	while(hasRAM == false || playerHealth >=0)
 	{
+		for(int j=0; j>=4; j++)\
+		{
 
+		}
 	}
-	*/
+
 	fight( playerHealth, playerMoney,  bugPOW,  bugWorth);
+
+
+	if(easy.hasRAM == true)
+	{
+		cout<<"\nU WIN!!!"<<endl;
+	}
+	else if (playerHealth = 0)
+	{
+		cout<<"You have no more health left, you lose"<<endl;
+	}
 
 	return 0;
 }
