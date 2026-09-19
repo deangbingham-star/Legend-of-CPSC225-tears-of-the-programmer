@@ -158,8 +158,8 @@ int run(int playerHealth)
 
 void displayBug(monster codebug)
 {
- 	cout<<"Bug Pow = "<<codebug.POW<<endl;
- 	cout<<"Bug Worth = "<<codebug.worth<<endl;   
+	cout<<"Bug Pow = "<<codebug.POW<<endl;
+	cout<<"Bug Worth = "<<codebug.worth<<endl;
 }
 
 //*************************************************
@@ -215,10 +215,22 @@ int main()
 
 	while(hasRAM == false || playerHealth >=0)
 	{
-		for(int j=0; j>=4; j++)\
-		{
+		int choice;
+		int chapter =0;
+		int j;
 
+		for( j=0; j>=4; j++)
+		{
+			cout<<"Round "<<j<<endl;
+			displayBug(codebug);
+
+			cout<<"This codebug blocks your path, do you choose to:"<<
+			    "\n(1. Fight (1/2 chance to take damage) or (2.Run (1/20 chance to die)"<<endl;
+			cin>>choice;
 		}
+
+		//cout<<"Chapter "<<chapter<<endl;
+
 	}
 
 	fight( playerHealth, playerMoney,  bugPOW,  bugWorth);
