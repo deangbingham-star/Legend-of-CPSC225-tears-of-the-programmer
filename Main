@@ -169,6 +169,263 @@ int main()
 	srand(time(0));
 	//store hero presets
 	Hero easy;
+	easy.health = 0;
+	easy.money = 2000;
+    easy.hasRAM = false;
+
+
+
+
+	//store monster presets
+
+	monster codebug;
+	codebug.POW = genRandNum(5,10);
+	codebug.worth = genRandNum(1,10);
+
+
+
+
+
+	/*
+	int randNum1;   //Testing for rand num gen
+	randNum1 = genRandNum(100,1000);
+	cout<<randNum1<<endl;
+
+	int randNum2;
+	randNum2 = genRandNum(20,40);
+	cout<<randNum2<<endl;
+
+	*/
+
+
+
+
+	cout<<"playerhp="<<easy.health<<" playerMoney="<<easy.money<<endl;
+
+	//run(easy.health);
+	//shop(easy); //test for shop
+
+
+	while(easy.hasRAM == false && easy.health >=0)
+	{
+		int choice;
+		int chapter =0;
+		int j;
+
+		for( j=0; j<3; j++)
+		{
+			cout<<"Round "<<j<<endl;
+			displayBug(codebug);
+
+			cout<<"\nThis codebug blocks your path, do you choose to:"<<
+			    "\n(1. Fight (1/2 chance to take damage) or (2.Run (1/20 chance to die)"<<endl;
+			cin>>choice;
+			if(choice ==1)
+			{
+				fight(easy, codebug);
+			}
+
+			if(choice ==2)
+			{
+				run(easy);
+			}
+			cout<<"\nend\n";
+
+
+			if(easy.hasRAM == true)
+			{
+				cout<<"\nU WIN!!!"<<endl;
+				break;
+			}
+			else if (easy.health == 0)
+			{
+				cout<<"You have no more health left, you lose"<<endl;
+				break;
+			}
+		}
+		cout<<"Enter shop\n"<<endl;
+		shop (easy);
+
+		//cout<<"Chapter "<<chapter<<endl;
+
+	}
+
+	//fight( playerHealth, playerMoney,  bugPOW,  bugWorth);
+
+    cout<<"\n\nScript End"<<endl;
+
+	return 0;
+}/******************************************************************************
+Dean Bingham
+CPSC 225
+9/11/2026
+The Legend of CPSC225: Tears of the programmer
+
+EXTENSION GRANTED TO SUNDAY
+*******************************************************************************/
+#include <iostream>
+#include <string>
+#include <ctime>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+
+
+/* TO DO LIST
+Store Hero object
+Make list of monser objects
+
+Parent Loop
+        --Offer shop every 3 or 5 encounters, player can buy RAM to win or buy health or upgrades.
+        Child Loop Loop:
+            Randomize monsters to fight +
+            player can choose to fight, chance to win and gain money, chance to lose and get damage
+            player can choose to run, small chance to instantly die
+
+
+    End loop when:
+    Player die
+    Player saves enough money to buy more RAM
+
+    Store values in monster:  POW, Worth +
+
+
+
+
+
+
+LORE
+    For your insolent programming, Professor Marriott has BANISHED you to the realm of the Academics 1 desktops! Now you must fix
+    your memory leaks and syntax errors through combat; to clear enough bits in your system to earn yourself the RAM to escape!
+*/
+
+//********************************************
+class Hero
+{
+public:
+	int health; //Health is represented by memory
+	int money;
+	bool hasRAM = false; //win when RAM = true
+};
+class monster
+{
+public:
+	string name;
+	int POW;
+	int worth;
+};
+
+//**************************************************
+
+
+int genRandNum(int x, int y)
+{
+	//Generate random number between x and Y
+
+	int randNum = x+1 +(rand() % (y)-x);
+	//cout<<"     min="<<x<<" max="<<y<<endl;
+	return randNum;
+}
+
+//**********************************************
+
+Hero shop(Hero easy)
+{
+	//Manage shop
+	cout<<"Welcome to my Shop!\n \nScripts, Memory, RAM, you want it? Its yours my friend! \nAs long as you have enough bits!"
+	    " What can I get for you?\n\n(1.Memory +10 (25 bits)\n(2.RAM (200 bits)\n\n(3. Leave :(\n";
+	int userSelect;
+	cin>>userSelect;
+
+	if (userSelect ==1)
+	{
+		if (easy.money >=25)
+		{
+			cout<<"\nGood choice, You healed 10 health\n";
+			easy.health = easy.health +10;
+			easy.money = easy.money - 25;
+		}
+		else if(easy.money<25)
+		{
+			cout<<"\nSorry hero,I dont give credit! Come back when youre a little, HMMM, Richer!\n"<<endl;
+		}
+	}
+	else if (userSelect ==2)
+	{
+		if (easy.money >=200)
+		{
+			cout<<"Wow you can actually afford it?! Obtained RAM!\n";
+			easy.hasRAM = true;
+			easy.money = easy.money - 200;
+		}
+		else if(easy.money<25)
+		{
+			cout<<"\nSorry hero,I dont give credit! Come back when youre a little, HMMM, Richer!\n"<<endl;
+		}
+		else if(userSelect ==3)
+		{
+			cout<<"Goodbye\n";
+		}
+		else
+		{
+			cout<<"Sorry I don't speak Italian\n";
+		}
+
+	}
+
+	return  easy;
+}
+
+
+Hero fight(Hero easy, monster codebug)
+{
+	//fight enemies, win and get their worth or lose and take damage
+	int chance= genRandNum(1,2);
+	if(chance ==1)
+	{
+		//Win
+		cout<<"\nYOU WIN\n";
+		easy.money = easy.money + codebug.worth;
+		cout<<"Your money is now "<<easy.money<<endl;
+	}
+	else if (chance ==2)
+	{
+		//lose
+		cout<<"\nYOU LOSE\n";
+		easy.health = easy.health - codebug.POW;
+		cout<<"Your health is now "<<easy.health<<endl;
+	}
+	return easy;
+}
+
+Hero run(Hero easy)
+{
+	//Run, very small chance to die, no money gained
+	int runChance = genRandNum(1,20);
+	cout<<"Your chance: "<<runChance;
+	if (runChance==20)
+	{
+		//die
+		cout<<"\nYOU DIED!"<<endl;
+		easy.health = 0;
+
+	}
+	return easy;
+}
+
+void displayBug(monster codebug)
+{
+	cout<<"Bug Pow = "<<codebug.POW<<endl;
+	cout<<"Bug Worth = "<<codebug.worth<<endl;
+}
+
+//*************************************************
+
+int main()
+{
+	srand(time(0));
+	//store hero presets
+	Hero easy;
 	easy.health = 30;
 	easy.money = 2000;
 	bool hasRAM = easy.hasRAM;
