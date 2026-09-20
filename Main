@@ -4,7 +4,7 @@ CPSC 225
 9/11/2026
 The Legend of CPSC225: Tears of the programmer
 
-
+EXTENSION GRANTED TO SUNDAY
 *******************************************************************************/
 #include <iostream>
 #include <string>
@@ -84,7 +84,7 @@ Hero shop(Hero easy)
 	{
 		if (easy.money >=25)
 		{
-			cout<<"\nGood choice, You healed 10 memory\n";
+			cout<<"\nGood choice, You healed 10 health\n";
 			easy.health = easy.health +10;
 			easy.money = easy.money - 25;
 		}
@@ -120,7 +120,7 @@ Hero shop(Hero easy)
 }
 
 
-int fight(int playerHealth,int playerMoney, int bugPOW, int bugWorth)
+Hero fight(Hero easy, monster codebug)
 {
 	//fight enemies, win and get their worth or lose and take damage
 	int chance= genRandNum(1,2);
@@ -128,20 +128,20 @@ int fight(int playerHealth,int playerMoney, int bugPOW, int bugWorth)
 	{
 		//Win
 		cout<<"\nYOU WIN\n";
-		playerMoney = playerMoney + bugWorth;
-		cout<<"Your money is now "<<playerMoney<<endl;
+		easy.money = easy.money + codebug.worth;
+		cout<<"Your money is now "<<easy.money<<endl;
 	}
 	else if (chance ==2)
 	{
 		//lose
 		cout<<"\nYOU LOSE\n";
-		playerHealth = playerHealth - bugPOW;
-		cout<<"Your health is now "<<playerHealth<<endl;
+		easy.health = easy.health - codebug.POW;
+		cout<<"Your health is now "<<easy.health<<endl;
 	}
-	return 0;
+	return easy;
 }
 
-int run(int playerHealth)
+Hero run(Hero easy)
 {
 	//Run, very small chance to die, no money gained
 	int runChance = genRandNum(1,20);
@@ -150,10 +150,10 @@ int run(int playerHealth)
 	{
 		//die
 		cout<<"\nYOU DIED!"<<endl;
-		playerHealth = 0;
+		easy.health = 0;
 
 	}
-	return playerHealth;
+	return easy;
 }
 
 void displayBug(monster codebug)
@@ -170,9 +170,7 @@ int main()
 	//store hero presets
 	Hero easy;
 	easy.health = 30;
-	easy.money = 20;
-	int playerHealth = easy.health;
-	int playerMoney = easy.money;
+	easy.money = 2000;
 	bool hasRAM = easy.hasRAM;
 
 
@@ -182,12 +180,7 @@ int main()
 
 	monster codebug;
 	codebug.POW = genRandNum(5,10);
-
 	codebug.worth = genRandNum(1,10);
-
-	int bugPOW = codebug.POW;
-	int bugWorth = codebug.worth;
-
 
 
 
@@ -207,19 +200,19 @@ int main()
 
 
 
-	cout<<"playerhp="<<playerHealth<<" playerMoney="<<playerMoney<<endl;
+	cout<<"playerhp="<<easy.health<<" playerMoney="<<easy.money<<endl;
 
 	//run(easy.health);
 	//shop(easy); //test for shop
 
 
-	while(hasRAM == false || playerHealth >=0)
+	while(hasRAM == false && easy.health >=0)
 	{
 		int choice;
 		int chapter =0;
 		int j;
 
-		for( j=0; j>=4; j++)
+		for( j=0; j<3; j++)
 		{
 			cout<<"Round "<<j<<endl;
 			displayBug(codebug);
@@ -227,23 +220,39 @@ int main()
 			cout<<"This codebug blocks your path, do you choose to:"<<
 			    "\n(1. Fight (1/2 chance to take damage) or (2.Run (1/20 chance to die)"<<endl;
 			cin>>choice;
+			if(choice ==1)
+			{
+				fight(easy, codebug);
+			}
+
+			if(choice ==2)
+			{
+				run(easy);
+			}
+			cout<<"\nend\n";
+
+
+			if(easy.hasRAM == true)
+			{
+				cout<<"\nU WIN!!!"<<endl;
+				break;
+			}
+			else if (easy.health == 0)
+			{
+				cout<<"You have no more health left, you lose"<<endl;
+				break;
+			}
 		}
+		cout<<"Enter shop\n"<<endl;
+		shop (easy);
 
 		//cout<<"Chapter "<<chapter<<endl;
 
 	}
 
-	fight( playerHealth, playerMoney,  bugPOW,  bugWorth);
+	//fight( playerHealth, playerMoney,  bugPOW,  bugWorth);
 
 
-	if(easy.hasRAM == true)
-	{
-		cout<<"\nU WIN!!!"<<endl;
-	}
-	else if (playerHealth = 0)
-	{
-		cout<<"You have no more health left, you lose"<<endl;
-	}
 
 	return 0;
 }
